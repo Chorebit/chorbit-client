@@ -2,7 +2,8 @@
 
 React 18 + Vite + TypeScript + Zustand + Apollo Client + TailwindCSS.
 
-For project-wide context, see `../chorebit-vault/README.md`.
+For project-wide context and all shared rules (git, PRs, conventions), see `../CLAUDE.md`.
+For architecture and specs, see `../chorebit-vault/README.md`.
 
 ## Stack
 | Package | Purpose |
@@ -40,15 +41,10 @@ npm run lint             # ESLint
 - Apollo Client connects to `http://localhost:4000/graphql` in dev
 - Zustand for UI-only state (modals, sidebar, etc.) — server state lives in Apollo cache
 - TailwindCSS for all styling, no CSS modules or styled-components
+- Functional components only (no class components)
 - Pages map 1:1 to routes
 
 ## Vault Workflow
 1. **Before implementing**: Read the relevant feature spec in `../chorebit-vault/features/` and any referenced architecture or decision docs
 2. **After implementing**: Update the feature spec to reflect what was actually built (if anything diverged from the plan)
 3. **If you make an architectural decision**: Write an ADR to `../chorebit-vault/decisions/` using the template
-
-## Conventions
-- TypeScript strict, no `any`
-- Functional components only (no class components)
-- No default exports (named exports only)
-- Commit format: `type: description (#issue)`

@@ -1,73 +1,48 @@
-# React + TypeScript + Vite
+# chorbit-client
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Frontend for **Chorbit** — chore tracking for groups, inspired by Tricount.
 
-Currently, two official plugins are available:
+## Stack
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+| Package | Purpose |
+|---------|---------|
+| React | UI framework |
+| Vite | Build tool + dev server |
+| TypeScript | Strict mode |
 
-## React Compiler
+**Planned**: Apollo Client (GraphQL), Zustand (local state), TailwindCSS (styling), Vitest (testing)
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
-
-## Expanding the ESLint configuration
-
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
-
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
-
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+## Structure
+```
+src/
+  components/   ← React components
+  pages/        ← route-level components
+  graphql/      ← queries, mutations, fragments
+  stores/       ← Zustand stores
+  lib/          ← Apollo Client setup, utilities
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
-
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
-
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+## Run
+```bash
+npm install
+npm run dev              # start Vite dev server
 ```
+
+## Test
+```bash
+npm test                 # Vitest (when configured)
+npm run typecheck        # tsc --noEmit
+npm run lint             # ESLint
+```
+
+## Conventions
+- TypeScript strict, no `any`
+- Named exports only (no default exports)
+- Functional components only (no class components)
+- Zustand for UI-only state (modals, sidebar) — server state lives in Apollo cache
+- TailwindCSS for all styling (no CSS modules or styled-components)
+- Secrets via env vars only
+
+## Key Patterns
+- Apollo Client connects to `http://localhost:4000/graphql` in dev
+- Pages map 1:1 to routes
